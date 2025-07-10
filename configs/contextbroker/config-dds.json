@@ -1,0 +1,19 @@
+{
+    "dds": {
+        "ddsmodule": {
+            "dds": {
+                "domain": 0,
+                "transport": "udp"
+            }
+        },
+        "ngsild": {
+            "topics": {
+                "rt/pcb_metadata": {
+                    "entityType": "Robot",
+                    "entityId": "urn:ngsi-ld:pcb:1",
+                    "attribute": "mypcb"
+                }
+            }
+        }
+    }
+}
