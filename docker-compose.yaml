@@ -1,0 +1,35 @@
+services:
+  vulcanexus:
+    image: custom_vulcanexus
+    hostname: DDS_host
+    container_name: pcbinfo
+    build: 
+      context: .
+      dockerfile: build/custom_vulcanexus/Dockerfile
+    networks:
+      - mynet
+    privileged: true
+    ipc: host
+    command: sleep infinity
+    environment:
+      DISPLAY: "$DISPLAY"
+    volumes:
+       - ./configs/ros2_pkgs/control_station_ws/src:/control_station_ws/src
+       - /tmp/.X11-unix:/tmp/.X11-unix
+    ports:
+      # FastApi server for the pcb_images
+      - 5001:5000
+
+
+
+
+
+
+
+
+      
+networks:
+  mynet:
+    driver: bridge     
+
+    
