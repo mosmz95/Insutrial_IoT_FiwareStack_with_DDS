@@ -26,7 +26,7 @@ python3 -m uvicorn pcb_img_server.run_server:app --host 0.0.0.0 --port 5000
 5- In a new termianl, launch the following for pcb images to get generated and sent to the server  
 
 ```bash
-sudo docker exec -it ros2 bash
+sudo docker exec -it pcbinfo bash
 ros2 launch defective_pcb_detector defective_pcb_generator.launch.py
 ```
 ##### Some useful command on docker
@@ -46,7 +46,13 @@ sudo docker stop $(sudo docker ps -q | tail -n +2)
 ```
 
 
-12 - create the subscription to the orion_ld
+7 - Create the subscription of quantumleap to the Orion-ld,
+the endpoint should be the one which is reachable within 'mynet' network, you can run this python script 
+```bash
+python3 ./configs/contextbroker/QL_subscription_request.py
+```
+or the following command on the terminal.
+
 ```bash
 curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --header 'Content-Type: application/json' \
@@ -63,7 +69,7 @@ curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
   "notification": {
     "attributes": ["mypcb"],
     "endpoint": {
-      "uri": "http://localhost:8668/v2/notify",
+      "uri": "http://quantumleap:8668/v2/notify",
       "accept": "application/json"
     }
   }
@@ -71,12 +77,23 @@ curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 ```
 
 
-13 - check subscription 
+8 - if you want, you can check the subscription 
 ```bash
 curl --location 'http://localhost:8668/v2/entities/urn:ngsi-ld:pcb:1/attrs/mypcb?lastN=3' \
 --header 'Accept: application/json'
 ```
-14 grafana query request
+
+9 - check the list of subscriptions to the CB, run this 
+```bash
+python3 ./configs/contextbroker/Orion_ld_list_of_subscriptions.py.py
+```
+or 
+```bash
+curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+--header 'Content-Type: application/json'
+
+```
+9 - grafana query request
 
 ```bash
 SELECT 
@@ -125,3 +142,28 @@ docker run -d \
   grafana/grafana
 
 ##
+
+curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+--header 'Content-Type: application/json' \
+--data '{
+  "description": "Monitor changes to the image URL of PCB",
+  "type": "Subscription",
+  "entities": [
+    {
+      "type": "Robot",
+      "id": "urn:ngsi-ld:pcb:1"
+    }
+  ],
+  "watchedAttributes": ["mypcb"],
+  "notification": {
+    "attributes": ["mypcb"],
+    "endpoint": {
+      "uri": "http://localhost:8868/v2/notify",
+      "accept": "application/json"
+    }
+  }
+}'
+
+
+curl --location 'http://localhost:8868/v2/entities/urn:ngsi-ld:pcb:1/attrs/mypcb?lastN=3' \
+--header 'Accept: application/json'
