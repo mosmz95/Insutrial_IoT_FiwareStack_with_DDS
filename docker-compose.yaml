@@ -24,14 +24,14 @@ services:
   mongo_db:
     image: mongo:4.4
     hostname: mongo_host
-    container_name: mongo
+    container_name: mongo_db
     networks:
       - mynet
     privileged: true
     ipc: host
     command: --bind_ip_all
     volumes:
-      - mongo_data:/data
+      - mongo_data:/data/db
     ports:
       - 27017:27017
 
@@ -60,9 +60,60 @@ services:
 
 
 
+  crate_db:
+    image: crate:latest
+    hostname: crate_host
+    container_name: crate_db
+    networks:
+      - mynet
+    privileged: true
+    ipc: host
+    volumes:
+      - crate_data:/data
+    ports:
+      - 4200:4200
+
+  quantumleap:
+    image: orchestracities/quantumleap
+    hostname: ql_host
+    container_name: quantumleap
+    networks:
+      - mynet
+    privileged: true
+    ipc: host  
+    environment:
+      - CRATE_HOST=crate_db
+      - LOGLEVEL=DEBUG
+    depends_on:
+      - crate_db
+    ports:
+      - 8668:8668
+    healthcheck:
+      test: curl --fail -s http://quantumleap:8668/version || exit 1
+      
+  grafana:
+    image: grafana/grafana
+    hostname: grafana_host
+    container_name: grafana
+    networks:
+      - mynet
+    privileged: true
+    ipc: host
+    environment:
+      - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - 443:3000
+    
+
+
 volumes:
   mongo_data:
-      
+  grafana-storage:
+  crate_data:
+
+
 networks:
   mynet:
     driver: bridge     
