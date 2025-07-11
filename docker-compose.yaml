@@ -21,12 +21,47 @@ services:
       - 5001:5000
 
 
+  mongo_db:
+    image: mongo:4.4
+    hostname: mongo_host
+    container_name: mongo
+    networks:
+      - mynet
+    privileged: true
+    ipc: host
+    command: --bind_ip_all
+    volumes:
+      - mongo_data:/data
+    ports:
+      - 27017:27017
+
+  orion_ld:
+    image: fiware/orion-ld:1.9.0
+    hostname: orion_host
+    container_name: orion
+    networks:
+      - mynet
+    privileged: true
+    ipc: host
+    command: -dbhost mongo_db -logLevel DEBUG -wip dds -mongocOnly # -forwarding -experimental
+    environment:
+      - ORIONLD_MONGO_HOST=mongo_db
+    volumes:
+       - ./configs/contextbroker/config-dds.json:/root/.orionld
+    depends_on:
+      - mongo_db
+    ports:
+      - "1026:1026"
+    restart: always
+    healthcheck:
+      test: curl --fail -s http://orion:1026/version || exit 1
+      interval: 30s
+      retries: 15
 
 
 
-
-
-
+volumes:
+  mongo_data:
       
 networks:
   mynet:
