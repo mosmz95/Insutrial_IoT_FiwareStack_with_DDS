@@ -46,32 +46,23 @@
                     0,
                     0
                   ],
-                  "executedQueryString": "SELECT \n  mypcb['defected'] AS defected,\n  mypcb['material_info'] AS material_info,\n  mypcb['heatsink_number'] AS heatsink_size,\n  mypcb['url'] AS image_url,\n  mypcb['id'] AS pcb_id,\n  mypcb['defect_loc_x'] AS x,\n  mypcb['defect_loc_y'] AS y,\n  mypcb['departured'] AS departured\nFROM \"doc\".\"etrobot\"\nWHERE mypcb['url'] IS NOT NULL\nORDER BY time_index DESC\nLIMIT 1;"
+                  "executedQueryString": "SELECT\n  ts AS \"time\",\n  compound->>'id' AS pcb_id,\n  compound->>'url' AS image_url,\n  (compound->>'width')::int AS width,\n  (compound->>'height')::int AS height,\n  (compound->>'defected')::boolean AS defected,\n  (compound->>'defect_loc_x')::float AS x,\n  (compound->>'defect_loc_y')::float AS y,\n  compound->>'material_info' AS material_info,\n  (compound->>'heatsink_number')::int AS heatsink_size,\n  compound->>'departured' AS departured\nFROM\n  attributes\nWHERE\n  entityId = 'urn:ngsi-ld:pcb:1'\n  AND id = 'https://uri.etsi.org/ngsi-ld/default-context/mypcb'\nORDER BY\n  ts DESC\nLIMIT 1;\n"
                 },
                 "fields": [
                   {
-                    "name": "defected",
-                    "type": "boolean",
+                    "name": "time",
+                    "type": "time",
                     "typeInfo": {
-                      "frame": "bool",
+                      "frame": "time.Time",
                       "nullable": true
                     },
                     "config": {}
                   },
                   {
-                    "name": "material_info",
+                    "name": "pcb_id",
                     "type": "string",
                     "typeInfo": {
                       "frame": "string",
-                      "nullable": true
-                    },
-                    "config": {}
-                  },
-                  {
-                    "name": "heatsink_size",
-                    "type": "number",
-                    "typeInfo": {
-                      "frame": "int64",
                       "nullable": true
                     },
                     "config": {}
@@ -86,10 +77,28 @@
                     "config": {}
                   },
                   {
-                    "name": "pcb_id",
-                    "type": "string",
+                    "name": "width",
+                    "type": "number",
                     "typeInfo": {
-                      "frame": "string",
+                      "frame": "int32",
+                      "nullable": true
+                    },
+                    "config": {}
+                  },
+                  {
+                    "name": "height",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "int32",
+                      "nullable": true
+                    },
+                    "config": {}
+                  },
+                  {
+                    "name": "defected",
+                    "type": "boolean",
+                    "typeInfo": {
+                      "frame": "bool",
                       "nullable": true
                     },
                     "config": {}
@@ -113,6 +122,24 @@
                     "config": {}
                   },
                   {
+                    "name": "material_info",
+                    "type": "string",
+                    "typeInfo": {
+                      "frame": "string",
+                      "nullable": true
+                    },
+                    "config": {}
+                  },
+                  {
+                    "name": "heatsink_size",
+                    "type": "number",
+                    "typeInfo": {
+                      "frame": "int32",
+                      "nullable": true
+                    },
+                    "config": {}
+                  },
+                  {
                     "name": "departured",
                     "type": "string",
                     "typeInfo": {
@@ -126,19 +153,22 @@
               "data": {
                 "values": [
                   [
-                    true
-                  ],
-                  [
-                    "data sheet info"
-                  ],
-                  [
-                    4
-                  ],
-                  [
-                    "http://0.0.0.0:5000/images/b3f925fafdc84103bf90cba0643ff291.png"
+                    1752591499864
                   ],
                   [
                     "PCB_015"
+                  ],
+                  [
+                    "http://0.0.0.0:5000/images/ccd52136df8f415aa706720d19bddbfb.png"
+                  ],
+                  [
+                    120
+                  ],
+                  [
+                    80
+                  ],
+                  [
+                    true
                   ],
                   [
                     45.5
@@ -147,7 +177,13 @@
                     60.299999237
                   ],
                   [
-                    "2025-07-14T14:55:50.397047"
+                    "data sheet info"
+                  ],
+                  [
+                    4
+                  ],
+                  [
+                    "2025-07-15T14:58:19.821001"
                   ]
                 ]
               }
@@ -163,7 +199,7 @@
         "renderMode": "everyRow",
         "editors": [],
         "editor": {
-          "language": "html",
+          "language": "markdown",
           "format": "auto"
         },
         "wrap": false,
@@ -185,7 +221,7 @@
       },
       "id": 5,
       "options": {
-        "content": "<table width=\"100%\">\n    <tr>\n      <th width=\"2%\">Panel</th>\n      <td >marcusolsson-dynamictext-panel @ 5.7.0</td>\n    </tr>\n    <tr>\n      <th>Queries</th>\n      <td>A[undefined]</td>\n    </tr>\n    \n    <tr><th>Data</th><td> 1 frames, 8 fields, 1 rows </td></tr>\n    \n    <tr>\n      <th>Grafana</th>\n      <td>Grafana v12.0.2 (5bda17e7c1) // Open Source</td>\n    </tr>\n  </table>",
+        "content": "<table width=\"100%\">\n    <tr>\n      <th width=\"2%\">Panel</th>\n      <td >marcusolsson-dynamictext-panel @ 5.7.0</td>\n    </tr>\n    <tr>\n      <th>Queries</th>\n      <td>A[grafana-postgresql-datasource]</td>\n    </tr>\n    \n    <tr><th>Data</th><td> 1 frames, 11 fields, 1 rows </td></tr>\n    \n    <tr>\n      <th>Grafana</th>\n      <td>Grafana v12.0.2 (5bda17e7c1) // Open Source</td>\n    </tr>\n  </table>",
         "mode": "html"
       },
       "title": "Debug info",
@@ -202,7 +238,7 @@
         "y": 7
       },
       "options": {
-        "content": "{\n  \"id\": 1,\n  \"type\": \"marcusolsson-dynamictext-panel\",\n  \"title\": \"New panel\",\n  \"gridPos\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"h\": 18,\n    \"w\": 14\n  },\n  \"fieldConfig\": {\n    \"defaults\": {\n      \"thresholds\": {\n        \"mode\": \"absolute\",\n        \"steps\": [\n          {\n            \"color\": \"green\",\n            \"value\": null\n          },\n          {\n            \"color\": \"red\",\n            \"value\": 80\n          }\n        ]\n      }\n    },\n    \"overrides\": []\n  },\n  \"pluginVersion\": \"5.7.0\",\n  \"targets\": [\n    {\n      \"editorMode\": \"code\",\n      \"format\": \"table\",\n      \"rawQuery\": true,\n      \"rawSql\": \"SELECT \\n  mypcb['defected'] AS defected,\\n  mypcb['material_info'] AS material_info,\\n  mypcb['heatsink_number'] AS heatsink_size,\\n  mypcb['url'] AS image_url,\\n  mypcb['id'] AS pcb_id,\\n  mypcb['defect_loc_x'] AS x,\\n  mypcb['defect_loc_y'] AS y,\\n  mypcb['departured'] AS departured\\nFROM \\\"doc\\\".\\\"etrobot\\\"\\nWHERE mypcb['url'] IS NOT NULL\\nORDER BY time_index DESC\\nLIMIT 1;\",\n      \"refId\": \"A\",\n      \"sql\": {\n        \"columns\": [\n          {\n            \"parameters\": [],\n            \"type\": \"function\"\n          }\n        ],\n        \"groupBy\": [\n          {\n            \"property\": {\n              \"type\": \"string\"\n            },\n            \"type\": \"groupBy\"\n          }\n        ],\n        \"limit\": 50\n      }\n    }\n  ],\n  \"datasource\": {\n    \"uid\": \"CrateDB_pcbmetada\"\n  },\n  \"options\": {\n    \"renderMode\": \"everyRow\",\n    \"editors\": [],\n    \"editor\": {\n      \"language\": \"html\",\n      \"format\": \"auto\"\n    },\n    \"wrap\": false,\n    \"contentPartials\": [],\n    \"content\": \" <h2>Defective PCB Info</h2>\\n      <p><strong>ID:</strong> {{@root.pcb_id}}</p>\\n      <p><strong>Defected:</strong> {{@root.defected}}</p>\\n      <p><strong>Material:</strong> {{@root.material_info}}</p>\\n      <p><strong>Defect Location:</strong> ({{@root.x}}, {{@root.y}})</p>\\n      <p><strong>Departured:</strong> {{@root.departured}}</p>\\n\\n      <figure style=\\\"text-align: center;\\\">\\n        <img src=\\\"{{{ @root.image_url }}}\\\" alt=\\\"Defective PCB\\\" width=\\\"400\\\" style=\\\"border: 1px solid #ccc;\\\" />\\n        <figcaption style=\\\"font-size: 14px; color: #666; margin-top: 8px;\\\">\\n          Defective PCB detected on {{@root.departured}}\\n        </figcaption>\\n      </figure>\",\n    \"defaultContent\": \"The query didn't return any results.\",\n    \"helpers\": \"\",\n    \"afterRender\": \"\",\n    \"externalStyles\": [],\n    \"styles\": \"\"\n  }\n}",
+        "content": "{\n  \"id\": 1,\n  \"type\": \"marcusolsson-dynamictext-panel\",\n  \"title\": \"New panel\",\n  \"gridPos\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"h\": 8,\n    \"w\": 12\n  },\n  \"fieldConfig\": {\n    \"defaults\": {\n      \"thresholds\": {\n        \"mode\": \"absolute\",\n        \"steps\": [\n          {\n            \"color\": \"green\",\n            \"value\": null\n          },\n          {\n            \"color\": \"red\",\n            \"value\": 80\n          }\n        ]\n      }\n    },\n    \"overrides\": []\n  },\n  \"pluginVersion\": \"5.7.0\",\n  \"targets\": [\n    {\n      \"datasource\": {\n        \"type\": \"grafana-postgresql-datasource\",\n        \"uid\": \"P40F15FF3123182DA\"\n      },\n      \"editorMode\": \"code\",\n      \"format\": \"table\",\n      \"rawQuery\": true,\n      \"rawSql\": \"SELECT\\n  ts AS \\\"time\\\",\\n  compound->>'id' AS pcb_id,\\n  compound->>'url' AS image_url,\\n  (compound->>'width')::int AS width,\\n  (compound->>'height')::int AS height,\\n  (compound->>'defected')::boolean AS defected,\\n  (compound->>'defect_loc_x')::float AS x,\\n  (compound->>'defect_loc_y')::float AS y,\\n  compound->>'material_info' AS material_info,\\n  (compound->>'heatsink_number')::int AS heatsink_size,\\n  compound->>'departured' AS departured\\nFROM\\n  attributes\\nWHERE\\n  entityId = 'urn:ngsi-ld:pcb:1'\\n  AND id = 'https://uri.etsi.org/ngsi-ld/default-context/mypcb'\\nORDER BY\\n  ts DESC\\nLIMIT 1;\\n\",\n      \"refId\": \"A\",\n      \"sql\": {\n        \"columns\": [\n          {\n            \"parameters\": [],\n            \"type\": \"function\"\n          }\n        ],\n        \"groupBy\": [\n          {\n            \"property\": {\n              \"type\": \"string\"\n            },\n            \"type\": \"groupBy\"\n          }\n        ],\n        \"limit\": 50\n      }\n    }\n  ],\n  \"datasource\": {\n    \"type\": \"grafana-postgresql-datasource\",\n    \"uid\": \"P40F15FF3123182DA\"\n  },\n  \"options\": {\n    \"renderMode\": \"everyRow\",\n    \"editors\": [],\n    \"editor\": {\n      \"language\": \"markdown\",\n      \"format\": \"auto\"\n    },\n    \"wrap\": false,\n    \"contentPartials\": [],\n    \"content\": \" <h2>Defective PCB Info</h2>\\n      <p><strong>ID:</strong> {{@root.pcb_id}}</p>\\n      <p><strong>Defected:</strong> {{@root.defected}}</p>\\n      <p><strong>Material:</strong> {{@root.material_info}}</p>\\n      <p><strong>Defect Location:</strong> ({{@root.x}}, {{@root.y}})</p>\\n      <p><strong>Departured:</strong> {{@root.departured}}</p>\\n\\n      <figure style=\\\"text-align: center;\\\">\\n        <img src=\\\"{{{ @root.image_url }}}\\\" alt=\\\"Defective PCB\\\" width=\\\"400\\\" style=\\\"border: 1px solid #ccc;\\\" />\\n        <figcaption style=\\\"font-size: 14px; color: #666; margin-top: 8px;\\\">\\n          Defective PCB detected on {{@root.departured}}\\n        </figcaption>\\n      </figure>\",\n    \"defaultContent\": \"The query didn't return any results.\",\n    \"helpers\": \"\",\n    \"afterRender\": \"\",\n    \"externalStyles\": [],\n    \"styles\": \"\"\n  }\n}",
         "mode": "code",
         "code": {
           "language": "json",
@@ -242,13 +278,13 @@
     }
   ],
   "schemaVersion": 37,
-  "title": "Debug: New panel // 2025-07-14 16:59:17",
+  "title": "Debug: New panel // 2025-07-15 16:58:38",
   "tags": [
     "debug",
     "debug-marcusolsson-dynamictext-panel"
   ],
   "time": {
-    "from": "2025-07-14T08:56:16.726Z",
-    "to": "2025-07-14T14:56:16.726Z"
+    "from": "2025-07-15T08:58:26.287Z",
+    "to": "2025-07-15T14:58:26.287Z"
   }
 }
