@@ -1,9 +1,9 @@
 ### Run containers
-1 - Initially build the docker file
+1 - Build the docker compose file
  ```bash
 sudo docker compose build
 ```
-2 - run the container
+2 - Run the docker services
  ```bash
 sudo docker compose up
 ```
@@ -29,24 +29,10 @@ python3 -m uvicorn pcb_img_server.run_server:app --host 0.0.0.0 --port 5000
 sudo docker exec -it pcbinfo bash
 ros2 launch defective_pcb_detector defective_pcb_generator.launch.py
 ```
-##### Some useful command on docker
-6 - useful commands for docker
-```bash
-pip install --break-system-packages requests
-
-11  - sudo docker compose -f docker-composev2.yml up -d
 
 
-sudo docker stop $(sudo docker ps -q)
-
-sudo docker ps
-
-sudo docker logs -f orion_dds_test-orion-1
-sudo docker stop $(sudo docker ps -q | tail -n +2)
-```
-
-
-7 - Create the subscription of quantumleap to the Orion-ld,
+##### Subscription of Quantumleap to the Broker
+6 - Create the subscription of quantumleap to the Orion-ld,
 the endpoint should be the one which is reachable within 'mynet' network, you can run this python script 
 ```bash
 python3 ./configs/contextbroker/QL_subscription_request.py
@@ -77,15 +63,15 @@ curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 ```
 
 
-8 - if you want, you can check the subscription 
+7 - Check the subscription (if needed)
 ```bash
 curl --location 'http://localhost:8668/v2/entities/urn:ngsi-ld:pcb:1/attrs/mypcb?lastN=3' \
 --header 'Accept: application/json'
 ```
 
-9 - check the list of subscriptions to the CB, run this 
+8 - Check the list of subscriptions to the CB (if needed) 
 ```bash
-python3 ./configs/contextbroker/Orion_ld_list_of_subscriptions.py.py
+python3 ./configs/contextbroker/Orion_ld_list_of_subscriptions.py
 ```
 or 
 ```bash
@@ -93,8 +79,13 @@ curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --header 'Content-Type: application/json'
 
 ```
-9 - grafana query request
 
+##### Grafana Dashboard settings
+
+9 - Open your web browser and navigate to `http://localhost:443/`. The default username/password are both `admin`. 
+Once logged in, click on **dashboards** on the left menu and select the **pcb_metadata_readable** dashboard.
+
+In case you want to design your panel, you can finde the queries on the data sources as bellow
 ```bash
 SELECT 
   mypcb['defected'] AS defected,
@@ -110,8 +101,7 @@ WHERE mypcb['url'] IS NOT NULL
 ORDER BY time_index DESC
 LIMIT 1;
 ```
-
-then choose Business Text plugin, and copy this html code for rendering of json info
+In our case, Business Text plugin has been chosen as our visualization plugin, and the html code for rendering of json info is:
 ```bash
       <h2>Defective PCB Info</h2>
       <p><strong>ID:</strong> {{@root.pcb_id}}</p>
@@ -126,44 +116,8 @@ then choose Business Text plugin, and copy this html code for rendering of json 
           Defective PCB detected on {{@root.departured}}
         </figcaption>
       </figure>
-
-
-
-      ```json
-      {{{json @root}}}
-      ```
 ```
 
-sudo docker rm -f grafana
-docker run -d \
-  --name=grafana \
-  -p 3000:3000 \
-  -e "GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel" \
-  grafana/grafana
-
-##
-
-curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
---header 'Content-Type: application/json' \
---data '{
-  "description": "Monitor changes to the image URL of PCB",
-  "type": "Subscription",
-  "entities": [
-    {
-      "type": "Robot",
-      "id": "urn:ngsi-ld:pcb:1"
-    }
-  ],
-  "watchedAttributes": ["mypcb"],
-  "notification": {
-    "attributes": ["mypcb"],
-    "endpoint": {
-      "uri": "http://localhost:8868/v2/notify",
-      "accept": "application/json"
-    }
-  }
-}'
-
-
-curl --location 'http://localhost:8868/v2/entities/urn:ngsi-ld:pcb:1/attrs/mypcb?lastN=3' \
---header 'Accept: application/json'
+<p align="center">
+  <img src="repo_images/grafana.png" width="440" width="250"/></a>
+</p>
