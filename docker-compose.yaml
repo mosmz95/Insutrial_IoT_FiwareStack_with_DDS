@@ -18,7 +18,7 @@ services:
        - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
       # FastApi server for the pcb_images
-      - 5001:5000
+      - 5000:5000
 
 
   mongo_db:
@@ -102,6 +102,9 @@ services:
     environment:
       - GF_INSTALL_PLUGINS=marcusolsson-dynamictext-panel
     volumes:
+      - ./configs/grafanadashboard/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./configs/grafanadashboard/datasources:/etc/grafana/provisioning/datasources
+      - ./configs/grafanadashboard/dashboards:/var/lib/grafana/dashboards
       - grafana-storage:/var/lib/grafana
     ports:
       - 443:3000
