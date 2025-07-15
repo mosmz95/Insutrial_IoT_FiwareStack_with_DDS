@@ -1,19 +1,42 @@
 {
     "dds": {
-        "ddsmodule": {
-            "dds": {
-                "domain": 0,
-                "transport": "udp"
-            }
+      "ddsmodule": {
+        "dds": {
+          "domain": 0,
+          "allowlist": [
+            {"name": "rt/pcb_metadata"}
+          ],
+          "blocklist": [
+            { "name": "rt/rosout" },
+            { "name": "rt/parameter_events" },
+            { "name": "rt/defective_pcb_info" }
+          ]
         },
-        "ngsild": {
-            "topics": {
-                "rt/pcb_metadata": {
-                    "entityType": "Robot",
-                    "entityId": "urn:ngsi-ld:pcb:1",
-                    "attribute": "mypcb"
-                }
-            }
+        "topics": {
+          "name": "*",
+          "qos": {
+            "durability": "TRANSIENT_LOCAL",
+            "history-depth": 10
+          }
+        },
+        "ddsenabler": null,
+        "specs": {
+          "threads": 12,
+          "logging": {
+            "stdout": false,
+            "verbosity": "info"
+          }
         }
+      },
+      "ngsild": {
+        "topics": {
+          "rt/pcb_metadata": {
+            "entityType": "Robot",
+            "entityId": "urn:ngsi-ld:pcb:1",
+            "attribute": "mypcb"
+          }
+        }
+      }
     }
-}
+  }
+  
