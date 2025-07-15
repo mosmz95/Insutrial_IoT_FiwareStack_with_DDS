@@ -30,56 +30,6 @@ sudo docker exec -it pcbinfo bash
 ros2 launch defective_pcb_detector defective_pcb_generator.launch.py
 ```
 
-
-##### Subscription of Quantumleap to the Broker
-6 - Create the subscription of quantumleap to the Orion-ld,
-the endpoint should be the one which is reachable within 'mynet' network, you can run this python script 
-```bash
-python3 ./configs/contextbroker/QL_subscription_request.py
-```
-or the following command on the terminal.
-
-```bash
-curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
---header 'Content-Type: application/json' \
---data '{
-  "description": "Monitor changes to the image URL of PCB",
-  "type": "Subscription",
-  "entities": [
-    {
-      "type": "Robot",
-      "id": "urn:ngsi-ld:pcb:1"
-    }
-  ],
-  "watchedAttributes": ["mypcb"],
-  "notification": {
-    "attributes": ["mypcb"],
-    "endpoint": {
-      "uri": "http://quantumleap:8668/v2/notify",
-      "accept": "application/json"
-    }
-  }
-}'
-```
-
-
-7 - Check the subscription (if needed)
-```bash
-curl --location 'http://localhost:8668/v2/entities/urn:ngsi-ld:pcb:1/attrs/mypcb?lastN=3' \
---header 'Accept: application/json'
-```
-
-8 - Check the list of subscriptions to the CB (if needed) 
-```bash
-python3 ./configs/contextbroker/Orion_ld_list_of_subscriptions.py
-```
-or 
-```bash
-curl --location 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
---header 'Content-Type: application/json'
-
-```
-
 ##### Grafana Dashboard settings
 
 9 - Open your web browser and navigate to `http://localhost:443/`. The default username/password are both `admin`. 
@@ -87,19 +37,27 @@ Once logged in, click on **dashboards** on the left menu and select the **pcb_me
 
 In case you want to design your panel, you can finde the queries on the data sources as bellow
 ```bash
-SELECT 
-  mypcb['defected'] AS defected,
-  mypcb['material_info'] AS material_info,
-  mypcb['heatsink_number'] AS heatsink_size,
-  mypcb['url'] AS image_url,
-  mypcb['id'] AS pcb_id,
-  mypcb['defect_loc_x'] AS x,
-  mypcb['defect_loc_y'] AS y,
-  mypcb['departured'] AS departured
-FROM "doc"."etrobot"
-WHERE mypcb['url'] IS NOT NULL
-ORDER BY time_index DESC
+SELECT
+  ts AS "time",
+  compound->>'id' AS pcb_id,
+  compound->>'url' AS image_url,
+  (compound->>'width')::int AS width,
+  (compound->>'height')::int AS height,
+  (compound->>'defected')::boolean AS defected,
+  (compound->>'defect_loc_x')::float AS x,
+  (compound->>'defect_loc_y')::float AS y,
+  compound->>'material_info' AS material_info,
+  (compound->>'heatsink_number')::int AS heatsink_size,
+  compound->>'departured' AS departured
+FROM
+  attributes
+WHERE
+  entityId = 'urn:ngsi-ld:pcb:1'
+  AND id = 'https://uri.etsi.org/ngsi-ld/default-context/mypcb'
+ORDER BY
+  ts DESC
 LIMIT 1;
+
 ```
 In our case, Business Text plugin has been chosen as our visualization plugin, and the html code for rendering of json info is:
 ```bash
