@@ -1,3 +1,9 @@
+#### Fiware temporal operation architecture
+
+<p align="center">
+  <img src="repo_images/mintaka.png" width="440" width="250"/></a>
+</p>
+
 ### Run containers
 1 - Build the docker compose file
  ```bash
