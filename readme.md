@@ -1,5 +1,10 @@
 ## Fiware toolset in ARISE
+The creation and analysis of trend data is a common requirement of context-driven systems. Within FIWARE, there are two common paradigms in use - either activating the temporal interface or subscribing to individual context entities and persisting them into a time-series database (using a component such as QuantumLeap) - the latter is described in a separate tutorial.
 
+Which mechanism to use should be it should be borne in mind when architecting such a system. The advantage of using a subscription mechanism is that only the subscribed entities are persisted, saving disk space. The advantage of the temporal interface is that it is provided by the context broker directly - no subscriptions are needed and HTTP traffic is reduced. Furthermore, the temporal interface can be queried across all context entities, not merely those which satisfy a subscription.
+[see this turorial on temporal operation from FIWARE](https://ngsi-ld-tutorials.readthedocs.io/en/latest/short-term-history.html)
+
+[orion-ld Temporal Representation of Entities (TRoE),](https://github.com/FIWARE/context.Orion-LD/blob/develop/doc/manuals-ld/troe.md)
 <p align="center">
   <img src="repo_images/QL.png" width="440" width="250"/></a>
 </p>
