@@ -1,4 +1,4 @@
-## Introduction:
+## Introduction
 This repositroy is part of the development of a robotic application as one of usecases of the EU-funded project, <a href="https://arise-middleware.eu/">ARISE: all-in-one-middleware</a>, which has been developed at the <a href="https://www.industry40lab.org/">INDUSTRY4.0</a>  contributing as a TEF in the project. 
 
 In a nutshell, it is demonstrated that messages in  the DDS format are translated into the NGSI-LD format and can be displayed on the dashboard,i.e., the interoperability between NGSI-LD and DDS protocols. 
