@@ -1,14 +1,30 @@
-## Fiware toolset in ARISE
-The creation and analysis of trend data is a common requirement of context-driven systems. Within FIWARE, there are two common paradigms in use - either activating the temporal interface or subscribing to individual context entities and persisting them into a time-series database (using a component such as QuantumLeap) - the latter is described in a separate tutorial.
+## Introduction:
+This repositroy is part of the development of a robotic application as one of usecases of the EU-funded project, <a href="https://arise-middleware.eu/">ARISE: all-in-one-middleware</a>, which has been developed at the <a href="https://www.industry40lab.org/">INDUSTRY4.0</a>  contributing as a TEF in the project. 
 
-Which mechanism to use should be it should be borne in mind when architecting such a system. The advantage of using a subscription mechanism is that only the subscribed entities are persisted, saving disk space. The advantage of the temporal interface is that it is provided by the context broker directly - no subscriptions are needed and HTTP traffic is reduced. Furthermore, the temporal interface can be queried across all context entities, not merely those which satisfy a subscription.
-[see this turorial on temporal operation from FIWARE](https://ngsi-ld-tutorials.readthedocs.io/en/latest/short-term-history.html)
+In a nutshell, it is demonstrated that messages in  the DDS format are translated into the NGSI-LD format and can be displayed on the dashboard,i.e., the interoperability between NGSI-LD and DDS protocols. 
 
-[orion-ld Temporal Representation of Entities (TRoE),](https://github.com/FIWARE/context.Orion-LD/blob/develop/doc/manuals-ld/troe.md)
+### Eprosima FastDDS
+Eprosima FastDDS is the implementation of DDS (Data Distribution Service) standard. FastDDS is the default middleware of ROS2 framework for data communication. AS part of ARISE-all-in-one-middleware toolset, Eprosima developed the [DDS Enabler](https://github.com/eProsima/DDS-Enabler) which maps DDS messages into the NGSI-LD format.  
+### FIWARE stack 
+
+In context-driven systems, it is important to track how data changes over time. Withing the FIWARE stack, there are two approaches to track data:
+
+i) Activating temporal interface, which lets you automatically store and query historical data. (using components such as FIWARE Mintaka and Timeseries-DB, CrateDB). The advantage of the temporal interface is that it is provided by the context broker directly - no subscriptions are needed and HTTP traffic is reduced. Furthermore, the temporal interface can be queried across all context entities, not merely those which satisfy a subscription.
+
+ii) Subscribing to individual context entities and persisting them into a time-series database (using components such as FIWARE QuantumLeap, CrateDB); The advantage of using a subscription mechanism is that only the subscribed entities are persisted, saving disk space. 
+
+For a more comprehensive understanding, check these two links: 
+1 - [Turorial on temporal operation from FIWARE](https://ngsi-ld-tutorials.readthedocs.io/en/latest/short-term-history.html)
+
+2 - [Orion-ld Temporal Representation of Entities (TRoE),](https://github.com/FIWARE/context.Orion-LD/blob/develop/doc/manuals-ld/troe.md)
 <p align="center">
   <img src="repo_images/QL.png" width="440" width="250"/></a>
 </p>
 
+## Showcases
+i) For the subscription check the branch [develop_branch_v1](https://github.com/mosmz95/ariseproject/tree/develop_branch_v1)
+
+ii) For the termporal interface check the branch [develop_branch_v2](https://github.com/mosmz95/ariseproject/tree/develop_branch_v2)
 ### Run containers
 1 - Build the docker compose file
  ```bash
