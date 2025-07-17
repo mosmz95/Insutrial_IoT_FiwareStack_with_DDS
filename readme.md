@@ -9,7 +9,7 @@ Eprosima FastDDS is the implementation of DDS (Data Distribution Service) standa
 
 In context-driven systems, it is important to track how data changes over time. Withing the FIWARE stack, there are two approaches to track data:
 
-i) Activating temporal interface, which lets you automatically store and query historical data. (using components such as FIWARE Mintaka and Timeseries-DB, CrateDB). The advantage of the temporal interface is that it is provided by the context broker directly - no subscriptions are needed and HTTP traffic is reduced. Furthermore, the temporal interface can be queried across all context entities, not merely those which satisfy a subscription.
+i) Activating temporal interface, which lets you automatically store and query historical data. (using components such as FIWARE Mintaka and Timeseries-DB). The advantage of the temporal interface is that it is provided by the context broker directly - no subscriptions are needed and HTTP traffic is reduced. Furthermore, the temporal interface can be queried across all context entities, not merely those which satisfy a subscription.
 
 ii) Subscribing to individual context entities and persisting them into a time-series database (using components such as FIWARE QuantumLeap, CrateDB); The advantage of using a subscription mechanism is that only the subscribed entities are persisted, saving disk space. 
 
