@@ -21,6 +21,7 @@ For a more comprehensive understanding, check these two links:
 <p align="center">
   <img src="repo_images/QL.png" width="440" width="250"/></a>
 </p>
+<p align="center"><em> Software architecture of subscription method</em></p>
 
 ## Showcases
 i) For the subscription check the branch [develop_branch_v1](https://github.com/mosmz95/ariseproject/tree/develop_branch_v1)
