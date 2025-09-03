@@ -83,18 +83,7 @@ config.iota = {
      *      https://github.com/Engineering-Research-and-Development/iotagent-opcua#type-configuration
      */
     types: {
-        // Device: {
-        //     active: [
-        //         {
-        //             name: "Current",
-        //             type: "Double"
-        //         },
-               
-        //     ],
-        //     lazy: [],
-        //     commands: []
-        // },
-
+        
         JointType: {
             active: [
                 {
@@ -115,78 +104,53 @@ config.iota = {
                 },
             ]
         },
-        // TCPType: {
-        //     active: [
-        //         {
-        //             name: "Force",
-        //             type: "Double Array[6]"
-        //         },
-        //         {
-        //             name: "Pose",
-        //             type: "Double Array[6]"
-        //         },
-        //         {
-        //             name: "Speed",
-        //             type: "Double Array[6]"
-        //         },
-               
-        //     ]
-        // },
 
-        Mos: {
+        
+        TcpType: {
             active: [
                 {
-                    name: "speedintype",
-                    type: "Double"
+                    name: "Force",
+                    type: "Double Array[6]"
+                },
+                {
+                    name: "Pose",
+                    type: "Double Array[6]"
+                },
+                {
+                    name: "Speed",
+                    type: "Double Array[6]"
                 },
                
-            ],
-            lazy: [],
-            commands: []
+            ]
         },
-
-
-
-
     },
-    contexts: [
-        // {
-        //     id: "urn:ngsi-ld:Device:servidor_1DBRVC",
-        //     type: "Device",
-        //     mappings: [
-        //         {
-        //             ocb_id: "myCurrent",
-        //             opcua_id: "ns=0;i=54565",
-        //             object_id: "ns=0;i=54565",
-        //             inputArguments: []
-        //         },
-        //     ]
-        // },
 
-        // {
-        //     id: "urn:ngsi-ld:TCP:servidor_1DBRVC",
-        //     type: "TCPType",
-        //     mappings: [
-        //         {
-        //             ocb_id: "myforce",
-        //             opcua_id: "ns=0;i=54601",
-        //             object_id: "ns=0;i=54601",
-        //             inputArguments: []
-        //         },
-        //         {
-        //             ocb_id: "mypose",
-        //             opcua_id: "ns=0;i=54599",
-        //             object_id: "ns=0;i=54599",
-        //             inputArguments: []
-        //         },
-        //         {
-        //             ocb_id: "myspeed",
-        //             opcua_id: "ns=0;i=54600",
-        //             object_id: "ns=0;i=54600",
-        //             inputArguments: []
-        //         },
-        //     ]
-        // },
+    contexts: [
+
+        {
+            id: "urn:ngsi-ld:TcpType:tcp0",
+            type: "TcpType",
+            mappings: [
+                {
+                    ocb_id: "Force",
+                    opcua_id: "ns=0;i=54601",
+                    object_id: "ns=0;i=54601",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Pose",
+                    opcua_id: "ns=0;i=54599",
+                    object_id: "ns=0;i=54599",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Speed",
+                    opcua_id: "ns=0;i=54600",
+                    object_id: "ns=0;i=54600",
+                    inputArguments: []
+                },
+            ]
+        },
         {
             id: "urn:ngsi-ld:JointType:base",
             type: "JointType",
@@ -218,92 +182,265 @@ config.iota = {
             ]
         },
         {
-            id: "urn:ngsi-ld:Mos:mos01",
-            type: "Mos",
+            id: "urn:ngsi-ld:JointType:elbow",
+            type: "JointType",
             mappings: [
                 {
-                    ocb_id: "speedintype",
-                    opcua_id: "ns=0;i=54563",
-                    object_id: "ns=0;i=54563",
+                    ocb_id: "Current",
+                    opcua_id: "ns=0;i=54577",
+                    object_id: "ns=0;i=54577",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Position",
+                    opcua_id: "ns=0;i=54575",
+                    object_id: "ns=0;i=54575",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Temperature",
+                    opcua_id: "ns=0;i=54578",
+                    object_id: "ns=0;i=54578",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Velocity",
+                    opcua_id: "ns=0;i=54576",
+                    object_id: "ns=0;i=54576",
+                    inputArguments: []
+                },
+            ]
+        },
+        {
+            id: "urn:ngsi-ld:JointType:shoulder",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "Current",
+                    opcua_id: "ns=0;i=54571",
+                    object_id: "ns=0;i=54571",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Position",
+                    opcua_id: "ns=0;i=54569",
+                    object_id: "ns=0;i=54569",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Temperature",
+                    opcua_id: "ns=0;i=54572",
+                    object_id: "ns=0;i=54572",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Velocity",
+                    opcua_id: "ns=0;i=54570",
+                    object_id: "ns=0;i=54570",
+                    inputArguments: []
+                },
+            ]
+        },
+        {
+            id: "urn:ngsi-ld:JointType:wrist1",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "Current",
+                    opcua_id: "ns=0;i=54583",
+                    object_id: "ns=0;i=54583",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Position",
+                    opcua_id: "ns=0;i=54581",
+                    object_id: "ns=0;i=54581",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Temperature",
+                    opcua_id: "ns=0;i=54584",
+                    object_id: "ns=0;i=54584",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Velocity",
+                    opcua_id: "ns=0;i=54582",
+                    object_id: "ns=0;i=54582",
+                    inputArguments: []
+                },
+            ]
+        },
+        {
+            id: "urn:ngsi-ld:JointType:wrist2",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "Current",
+                    opcua_id: "ns=0;i=54589",
+                    object_id: "ns=0;i=54589",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Position",
+                    opcua_id: "ns=0;i=54587",
+                    object_id: "ns=0;i=54587",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Temperature",
+                    opcua_id: "ns=0;i=54590",
+                    object_id: "ns=0;i=54590",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Velocity",
+                    opcua_id: "ns=0;i=54588",
+                    object_id: "ns=0;i=54588",
+                    inputArguments: []
+                },
+            ]
+        },
+        {
+            id: "urn:ngsi-ld:JointType:wrist3",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "Current",
+                    opcua_id: "ns=0;i=54595",
+                    object_id: "ns=0;i=54595",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Position",
+                    opcua_id: "ns=0;i=54593",
+                    object_id: "ns=0;i=54593",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Temperature",
+                    opcua_id: "ns=0;i=54596",
+                    object_id: "ns=0;i=54596",
+                    inputArguments: []
+                },
+                {
+                    ocb_id: "Velocity",
+                    opcua_id: "ns=0;i=54594",
+                    object_id: "ns=0;i=54594",
                     inputArguments: []
                 },
             ]
         },
     ],
-    contextSubscriptions: [
-        // {
-        //     id: "urn:ngsi-ld:Device:servidor_1DBRVC",
-        //     type: "Device",
-        //     mappings: [
-        //         {
-        //             ocb_id: "plc_maestro",
-        //             opcua_id: "ns=0;i=54560",
-        //             object_id: "ns=0;i=54560",
-        //             inputArguments: [
-        //                 {}
-        //             ]
-        //         },
-        //         {
-        //             ocb_id: "DeviceSetplc_maestro",
-        //             opcua_id: "ns=0;s=54560",
-        //             object_id: "ns=0;i=54560",
-        //             inputArguments: [
-        //                 {}
-        //             ]
-        //         }
-        //     ]
-        // },
 
-        // {
-        //     id: "urn:ngsi-ld:TCPType:servidor_1DBRVC",
-        //     type: "TCPType",
-        //     mappings: [
-        //         {
-        //             ocb_id: "plc_maestro",
-        //             opcua_id: "ns=0;i=54598",
-        //             object_id: "ns=0;i=54598",
-        //             inputArguments: [
-        //                 {}
-        //             ]
-        //         },
-        //         {
-        //             ocb_id: "DeviceSetplc_maestro",
-        //             opcua_id: "ns=0;s=54598",
-        //             object_id: "ns=0;i=54598",
-        //             inputArguments: [
-        //                 {}
-        //             ]
-        //         }
-        //     ]
-        // },
-        // {
-        //     id: "urn:ngsi-ld:JointType:base",
-        //     type: "JointType",
-        //     mappings: [
-        //         {
-        //             ocb_id: "base",
-        //             opcua_id: "ns=0;i=54562",
-        //             object_id: "ns=0;i=54562",
-        //             inputArguments: [
-        //                 {}
-        //             ]
-        //         },
-        //     ]
-        // },
+    contextSubscriptions: [
+       
         {
-            id: "urn:ngsi-ld:Mos:mos01",
-            type: "Mos",
+            id: "urn:ngsi-ld:JointType:base",
+            type: "JointType",
             mappings: [
                 {
-                    ocb_id: "velocity",
-                    opcua_id: "ns=0;i=54564",
-                    object_id: "ns=0;i=54564",
+                    ocb_id: "base",
+                    opcua_id: "ns=0;i=54562",
+                    object_id: "ns=0;i=54562",
                     inputArguments: [
                         {}
                     ]
-                }
+                },
             ]
         },
+
+        {
+            id: "urn:ngsi-ld:JointType:elbow",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "elbow",
+                    opcua_id: "ns=0;i=54574",
+                    object_id: "ns=0;i=54574",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+            ]
+        },
+
+        {
+            id: "urn:ngsi-ld:JointType:shoulder",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "shoulder",
+                    opcua_id: "ns=0;i=54568",
+                    object_id: "ns=0;i=54568",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+            ]
+        },
+
+        {
+            id: "urn:ngsi-ld:JointType:wrist1",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "wrist1",
+                    opcua_id: "ns=0;i=54580",
+                    object_id: "ns=0;i=54580",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+            ]
+        },
+
+        {
+            id: "urn:ngsi-ld:JointType:wrist2",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "wrist2",
+                    opcua_id: "ns=0;i=54586",
+                    object_id: "ns=0;i=54586",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+            ]
+        },
+
+        {
+            id: "urn:ngsi-ld:JointType:wrist3",
+            type: "JointType",
+            mappings: [
+                {
+                    ocb_id: "wrist3",
+                    opcua_id: "ns=0;i=54592",
+                    object_id: "ns=0;i=54592",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+            ]
+        },
+
+        {
+            id: "urn:ngsi-ld:TcpType:tcp0",
+            type: "TcpType",
+            mappings: [
+                {
+                    ocb_id: "tcp0",
+                    opcua_id: "ns=0;i=54598",
+                    object_id: "ns=0;i=54598",
+                    inputArguments: [
+                        {}
+                    ]
+                },
+                
+            ]
+        },
+       
 
     ],
     events: [],
