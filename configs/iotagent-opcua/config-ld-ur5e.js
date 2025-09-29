@@ -65,7 +65,7 @@ config.iota = {
          * Host where MongoDB is located. If the MongoDB used is a replicaSet, this property will contain a
          * comma-separated list of the instance names or IPs.
          */
-        host: 'mongo_host',
+        host: 'mongo_db',
         /**
          * Port where MongoDB is listening. In the case of a replicaSet, all the instances are supposed to be listening
          * in the same port.
@@ -120,6 +120,16 @@ config.iota = {
                     name: "Speed",
                     type: "Double Array[6]"
                 },
+               
+            ]
+        },
+        Robot: {
+            active: [
+                {
+                    name: "Joint",
+                    type: "JointType"
+                },
+              
                
             ]
         },
@@ -331,6 +341,14 @@ config.iota = {
                 },
             ]
         },
+        // {
+        //     id: "urn:ngsi-ld:Robot:ur5e",
+        //     type: "Robot",
+        //     joint: {type: "Relationship",
+        //             object: "urn:ngsi-ld:JointType:base"},
+
+        //     mappings: []
+        // },
     ],
 
     contextSubscriptions: [
